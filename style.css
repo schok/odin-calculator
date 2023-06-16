@@ -1,0 +1,75 @@
+body {
+    display: flex;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    background: #f7f4f0;
+}
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    min-height: 450px;
+    background: #fcdef1;
+    box-sizing: border-box;
+}
+
+.smallButton, .bigButton, .calculator, .display  {
+    display: flex;
+    border: 1px solid #facde9;
+    padding: 18px;
+    border-radius: 7px;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.smallButton {
+    width: 20%;
+}
+
+.bigButton {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 48%;
+}
+
+.smallButton, .bigButton{
+    background: white;
+    justify-content: center;
+}
+
+button:hover {
+    background-color:#f5f2f3;
+}
+
+button:active {
+    background-color: #e6dfe1;
+}
+
+.rowOne, .rowTwo, .rowThree, .rowFour,  .rowFive {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-content: space-around;
+    flex-wrap: wrap;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-content: space-around;
+    justify-content: flex-end;
+    align-content: flex-end;
+    background: #cde8fa;
+}
+
+.secondLineDisplayed {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.firstLineDisplayed, .secondLineDisplayed {
+    text-align: right;
+    overflow-wrap: break-word;
+}
