@@ -14,7 +14,7 @@ body {
     box-sizing: border-box;
 }
 
-.smallButton, .bigButton, .calculator, .display  {
+.smallButton, .clearButton, .deleteButton, .calculator, .display  {
     display: flex;
     border: 1px solid #facde9;
     padding: 18px;
@@ -27,13 +27,13 @@ body {
     width: 20%;
 }
 
-.bigButton {
+.clearButton, .deleteButton {
     margin-top: 10px;
     margin-bottom: 10px;
     width: 48%;
 }
 
-.smallButton, .bigButton{
+.smallButton, .clearButton, .deleteButton {
     background: white;
     justify-content: center;
 }

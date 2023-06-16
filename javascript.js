@@ -27,7 +27,7 @@ function operate(firstDigitEntered, secondDigitEntered, operator) {
 }
 
 function changeDisplay(clickedNumber, firstLineDisplayed) {
-    if (displayedNumber === undefined) {
+    if (displayedNumber === undefined || displayedNumber ===  0) {
         displayedNumber = clickedNumber;
     } else {
         displayedNumber += clickedNumber;
@@ -53,6 +53,11 @@ smallButton.forEach((element) => {
     element.onclick = function(){changeDisplay(element.innerHTML, firstLineDisplayed)};
 });
 
+const clearButton = document.querySelector(".clearButton");
+clearButton.onclick = function(){
+    displayedNumber = 0;
+    changeDisplay(0, firstLineDisplayed)
+};
 
 
 // function storeFirstDigitAndOperator() {
