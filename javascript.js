@@ -19,55 +19,67 @@ function operate(firstDigitEntered, secondDigitEntered, operator) {
         return add(firstDigitEntered, secondDigitEntered);
     } else if (operator === "-") {
         return subtract(firstDigitEntered, secondDigitEntered);
-    } else if (operator === "*") {
+    } else if (operator === "x") {
         return multiply(firstDigitEntered, secondDigitEntered);
     } else if (operator === "/") {
         return divide(firstDigitEntered, secondDigitEntered);
     }
 }
 
-function changeDisplay(clickedNumber, firstLineDisplayed) {
+function changeDisplay(clickedButton, LineDisplayed) {
     if (displayedNumber === undefined || displayedNumber ===  0) {
-        displayedNumber = clickedNumber;
+        displayedNumber = clickedButton;
     } else {
-        displayedNumber += clickedNumber;
+        displayedNumber += clickedButton;
     } 
-    // } else if(clickedbutton doesn't contain /x+-) {
-    //     then we make it the first digit entered
-    // } else if(it does contain /x+- for the last digit) {
-    //     then we store that into the operator
-    // } else if(/x+- isn't the last digit) {
-    //     then we'll store that into the second digit
-    // } else if (it's a equal sign) {
-    //     then we can operate on it woot
-    // } else if (displayedNumber.length < 20) {
-    //     displayedNumber += clickedNumber;
-    // }
-    firstLineDisplayed.innerHTML = displayedNumber;
+    LineDisplayed.innerHTML = displayedNumber;
 };
 
 const firstLineDisplayed = document.querySelector(".firstLineDisplayed");
+const secondLineDisplayed = document.querySelector(".secondLineDisplayed");
 const smallButton = document.querySelectorAll(".smallButton");
 
 smallButton.forEach((element) => {
-    element.onclick = function(){changeDisplay(element.innerHTML, firstLineDisplayed)};
+    element.onclick = function(){
+        if (displayedNumber === undefined && element.innerHTML.match(/[/x+-/=]/) != null || displayedNumber === 0 && element.innerHTML.match(/[/x+-/]/) != null) {
+            return;
+        } else if (element.innerHTML.match(/[=]/) && secondDigitEntered === undefined) {
+            return;
+        } else if (element.innerHTML.match(/[=]/)  && secondDigitEntered != undefined) {
+            result = operate(firstDigitEntered, secondDigitEntered, operator);
+        } else if (displayedNumber === undefined || displayedNumber === 0 && element.innerHTML.match(/[/x+-/=]/) === null) {
+            firstDigitEntered = parseInt(element.innerHTML);
+        } else if (element.innerHTML.match(/[/x+-/]/)) {
+            operator = element.innerHTML;
+        } else if (operator === undefined) {
+            firstDigitEntered = firstDigitEntered * 10 + parseInt(element.innerHTML);
+        } else if (operator != undefined && secondDigitEntered === undefined) {
+            secondDigitEntered = parseInt(element.innerHTML);
+        } else if (secondDigitEntered != undefined) {
+            secondDigitEntered = secondDigitEntered * 10 + parseInt(element.innerHTML);
+        }
+        
+        if (result === undefined) {
+            changeDisplay(element.innerHTML, firstLineDisplayed);
+        } else if (result != undefined) {
+            secondLineDisplayed.innerHTML = result;
+        }
+    };
 });
 
 const clearButton = document.querySelector(".clearButton");
 clearButton.onclick = function(){
     displayedNumber = 0;
     changeDisplay(0, firstLineDisplayed)
+    secondLineDisplayed.innerHTML = "&#160";
+    operator = undefined;
+    firstDigitEntered = undefined;
+    secondDigitEntered = undefined;
+    result = undefined;
 };
-
-
-// function storeFirstDigitAndOperator() {
-//     const firstLineDisplayed = document.querySelector(".firstLineDisplayed");
-//     window.onclick = e => {
-//         operator = e.target.innerText
-//     };
-// }
 
 let firstDigitEntered;
 let secondDigitEntered;
 let operator;
 let displayedNumber;
+let result;
