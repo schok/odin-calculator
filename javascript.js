@@ -73,6 +73,7 @@ smallButton.forEach((element) => {
                 return
             } else {
                 secondDigitEntered = parseInt(element.innerHTML);
+                console.log(operator);
                 newLine = firstDigitEntered+operator+secondDigitEntered;
                 firstLineDisplayed.innerHTML = newLine;
             }
@@ -81,7 +82,7 @@ smallButton.forEach((element) => {
             // If second digit exists, add onto it
             console.log("7");
             secondDigitEntered = secondDigitEntered * 10 + parseInt(element.innerHTML);
-            changeDisplay(element.innerHTML, firstLineDisplayed);
+            firstLineDisplayed.innerHTML += element.innerHTML;
         } else if (operator != undefined && secondDigitEntered != undefined && element.innerHTML.match(/[/x+-/]/)) {
             // Captures situation if another operator is entered
             console.log(parseInt(element.innerHTML));
@@ -110,6 +111,47 @@ clearButton.onclick = function(){
     secondDigitEntered = undefined;
     result = undefined;
 };
+
+const deleteButton = document.querySelector(".deleteButton");
+deleteButton.onclick = function(){
+    if (firstDigitEntered != undefined &&
+        secondDigitEntered != undefined &&
+        operator != undefined &&
+        result != undefined) {
+            displayedNumber = 0;
+        changeDisplay(0, firstLineDisplayed)
+        secondLineDisplayed.innerHTML = "&#160";
+        operator = undefined;
+        firstDigitEntered = undefined;
+        secondDigitEntered = undefined;
+        result = undefined;
+    } else {
+        if (firstDigitEntered != undefined && operator === undefined && secondDigitEntered === undefined) {
+            // Handles first digit backspace
+            displayedNumber  = firstLineDisplayed.innerHTML.slice(0, -1);
+            firstLineDisplayed.innerHTML = displayedNumber;
+            firstDigitEntered = parseInt(displayedNumber);
+            console.log(firstDigitEntered);
+        } else if (firstDigitEntered != undefined && operator != undefined && secondDigitEntered === undefined) {
+            // Handles operator backspace
+            displayedNumber  = firstLineDisplayed.innerHTML.slice(0, -1);
+            firstLineDisplayed.innerHTML = displayedNumber;
+            operator = undefined;
+            console.log(operator);
+        } else if (firstDigitEntered != undefined && operator != undefined && secondDigitEntered != undefined) {
+            // Handles all cases including if second digit exists
+            displayedNumber  = firstLineDisplayed.innerHTML.slice(0, -1);
+            if (secondDigitEntered < 10) {
+            secondDigitEntered = undefined;
+            } else if (secondDigitEntered > 9) {
+                secondDigitEntered = (secondDigitEntered - parseInt(firstLineDisplayed.innerHTML.slice(-1))) / 10;
+                console.log(secondDigitEntered);
+            }
+            firstLineDisplayed.innerHTML = displayedNumber;
+        }
+    }
+
+}
 
 let firstDigitEntered;
 let secondDigitEntered;
