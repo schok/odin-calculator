@@ -3,6 +3,7 @@ body {
     justify-content: center;
     font-family: 'Poppins', sans-serif;
     background: #f7f4f0;
+    padding: 100px 0;
 }
 
 .calculator {
